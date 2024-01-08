@@ -1,0 +1,9 @@
+/*
+!.github
+!config
+config/boards/shields/playground
+!patches
+!.gitignore
+!.gitmodules
+!build.yaml
+!zmk-nodefree-config

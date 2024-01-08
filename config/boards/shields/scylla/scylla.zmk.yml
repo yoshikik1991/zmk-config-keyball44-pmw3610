@@ -1,0 +1,12 @@
+file_format: "1"
+id: scylla
+name: Scylla
+type: shield
+url: https://github.com/Bastardkb/Charybdis/
+requires: [pro_micro]
+features:
+  - keys
+  - pointer
+siblings:
+  - scylla_left
+  - scylla_right
