@@ -9,7 +9,7 @@
 
 // misc aliases
 #define MY_FUN_NUM    mo_sk FUN_NUM LSHFT
-#define MY_NAV_ACNT   mo NAV_ACNT
+#define MY_NAV_ACNT   mo_sl NAV_ACNT NAV_ACNT
 #define MY_SYM_RET    lt SYMBOL RET
 #define MY_COMMA      lt SCROLL COMMA
 #define MY_DOT        lt MOUSE DOT
@@ -22,6 +22,11 @@ ZMK_BEHAVIOR(mo_sk, hold_tap,
     flavor = "hold-preferred";
     tapping-term-ms = <200>;
     bindings = <&mo>, <&sk>;
+)
+ZMK_BEHAVIOR(mo_sl, hold_tap,
+    flavor = "hold-preferred";
+    tapping-term-ms = <200>;
+    bindings = <&mo>, <&sl>;
 )
 
 ZMK_COMBO(combo_capsword, &caps_word,        LF2 RF2, 0 1,  50)
@@ -88,11 +93,11 @@ ZMK_LAYER(fun_num,
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
             &none      &kp F12       &kp F7       &kp F8       &kp F9    &kp PSCRN        &kp ASTRK       &kp N7       &kp N8       &kp N9    &kp MINUS        &none
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-            &none      &kp F11       &kp F4       &kp F5       &kp F6        &none         &kp FSLH       &kp N4       &kp N5       &kp N6     &kp PLUS        &none
+      &kp C_EJECT      &kp F11       &kp F4       &kp F5       &kp F6 &kp C_VOL_UP         &kp FSLH       &kp N4       &kp N5       &kp N6     &kp PLUS        &none
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-          &molock      &kp F10       &kp F1       &kp F2       &kp F3        &none        &kp PRCNT       &kp N1       &kp N2       &kp N3    &kp CARET      &molock
+          &molock      &kp F10       &kp F1       &kp F2       &kp F3 &kp C_VOL_DN        &kp PRCNT       &kp N1       &kp N2       &kp N3    &kp CARET      &molock
 // ╰───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-                                                  &trans       &trans        &none           &trans       &kp N0
+                                              &kp C_MUTE       &trans        &none           &trans       &kp N0
                                                                &trans       &trans          &kp DEL
 //                                        ╰────────────────────────────────────────╯ ╰───────────────────────────╯
 )
@@ -120,7 +125,7 @@ ZMK_LAYER(nav_acnt,
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
             &none        &none     &kp LEFT     &kp DOWN    &kp RIGHT    &kp PG_DN            &none    &kp RA(N)    &kp RA(E)    &kp RA(I)    &kp RA(A)        &none
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-          &molock    &kp LC(Z)    &kp LC(X)    &kp LC(C)    &kp LC(V)    &kp LC(Y)            &none &kp C_VOL_DN &kp C_VOL_UP   &kp C_MUTE  &kp C_EJECT      &molock
+          &molock    &kp LC(Z)    &kp LC(X)    &kp LC(C)    &kp LC(V)    &kp LC(Y)            &none        &none      &none &kp RA(LS(N1)) &kp RA(FSLH)      &molock
 // ╰───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
                                            &kp LC(RCTRL)       &trans       &trans            &none       &trans
                                                                &trans       &trans           &trans

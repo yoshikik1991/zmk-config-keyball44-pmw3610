@@ -14,7 +14,6 @@
 #include <zmk/activity.h>
 #include <zmk/usb.h>
 #include <zmk/event_manager.h>
-#include <zmk/workqueue.h>
 
 #include "rgb_indicator.h"
 #include "layers.h"
@@ -104,7 +103,14 @@ static int rgb_indicator_listener(const zmk_event_t *eh) {
             pixels[23] = OFF;
         }
     } else if (as_zmk_usb_conn_state_changed(eh)) {
-        state.usb_ready = as_zmk_usb_conn_state_changed(eh)->conn_state == ZMK_USB_CONN_HID;
+        switch (zmk_usb_get_status()) {
+            case USB_DC_CONFIGURED:
+            case USB_DC_RESUME:
+            case USB_DC_SOF:
+                state.usb_ready = true; break;
+            default:
+                state.usb_ready = false; break;
+        }
     }
 
     rgb_indicator_update();
@@ -169,16 +175,6 @@ int rgb_indicator_on() {
     return 0;
 }
 
-static void rgb_indicator_off_handler(struct k_work *work) {
-    for (int i = 0; i < STRIP_NUM_PIXELS; i++) {
-        pixels[i] = OFF;
-    }
-
-    led_strip_update_rgb(led_strip, pixels, STRIP_NUM_PIXELS);
-}
-
-K_WORK_DEFINE(underglow_off_work, rgb_indicator_off_handler);
-
 int rgb_indicator_off() {
     if (!led_strip)
         return -ENODEV;
@@ -194,8 +190,6 @@ int rgb_indicator_off() {
         }
     }
 #endif
-
-    k_work_submit_to_queue(zmk_workqueue_lowprio_work_q(), &underglow_off_work);
 
     state.on = false;
 
