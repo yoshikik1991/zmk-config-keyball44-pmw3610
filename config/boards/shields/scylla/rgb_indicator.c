@@ -13,6 +13,8 @@
 
 #include <zmk/activity.h>
 #include <zmk/usb.h>
+#include <zmk/ble.h>
+#include <zmk/endpoints.h>
 #include <zmk/event_manager.h>
 
 #include "rgb_indicator.h"
@@ -21,6 +23,9 @@
 #include <zmk/events/caps_word_state_changed.h>
 #include <zmk/events/split_peripheral_status_changed.h>
 #include <zmk/events/usb_conn_state_changed.h>
+#include <zmk/events/ble_active_profile_changed.h>
+#include <zmk/events/endpoint_changed.h>
+
 #include <zmk/keymap.h>
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
@@ -40,6 +45,7 @@ struct rgb_indicator_state {
     bool caps_word;
     bool split_missing;
     bool usb_ready;
+    bool ble_connected;
 };
 
 static const struct device *led_strip;
@@ -49,7 +55,7 @@ static struct led_rgb pixels[STRIP_NUM_PIXELS];
 static struct rgb_indicator_state state;
 
 static void rgb_indicator_update() {
-    if ((!state.usb_ready) || (!state.layer && !state.caps_word && !state.split_missing)) {
+    if ((!state.usb_ready) || (!state.layer && !state.caps_word && !state.split_missing && !state.ble_connected)) {
         rgb_indicator_off();
     } else {
         rgb_indicator_on();
@@ -111,23 +117,31 @@ static int rgb_indicator_listener(const zmk_event_t *eh) {
             default:
                 state.usb_ready = false; break;
         }
+    } else if (as_zmk_ble_active_profile_changed(eh) || as_zmk_endpoint_changed(eh)) {
+        state.ble_connected = zmk_endpoints_selected().transport == ZMK_TRANSPORT_BLE &&
+                                zmk_ble_active_profile_is_connected();
+        if (state.ble_connected) {
+            int index = zmk_ble_active_profile_index();
+            pixels[BLE_LED(index)] = BLUE;
+        } else {
+            pixels[BLE_1_LED] = OFF;
+            pixels[BLE_2_LED] = OFF;
+            pixels[BLE_3_LED] = OFF;
+        }
     }
 
     rgb_indicator_update();
     return 0;
 }
 
-ZMK_LISTENER(layer_indicator, rgb_indicator_listener);
-ZMK_SUBSCRIPTION(layer_indicator, zmk_layer_state_changed);
+ZMK_LISTENER(rgb_indicator, rgb_indicator_listener);
+ZMK_SUBSCRIPTION(rgb_indicator, zmk_layer_state_changed);
+ZMK_SUBSCRIPTION(rgb_indicator, zmk_caps_word_state_changed);
+ZMK_SUBSCRIPTION(rgb_indicator, zmk_split_peripheral_status_changed);
+ZMK_SUBSCRIPTION(rgb_indicator, zmk_usb_conn_state_changed);
+ZMK_SUBSCRIPTION(rgb_indicator, zmk_ble_active_profile_changed);
+ZMK_SUBSCRIPTION(rgb_indicator, zmk_endpoint_changed);
 
-ZMK_LISTENER(caps_word, rgb_indicator_listener);
-ZMK_SUBSCRIPTION(caps_word, zmk_caps_word_state_changed);
-
-ZMK_LISTENER(split_status, rgb_indicator_listener);
-ZMK_SUBSCRIPTION(split_status, zmk_split_peripheral_status_changed);
-
-ZMK_LISTENER(usb_conn, rgb_indicator_listener);
-ZMK_SUBSCRIPTION(usb_conn, zmk_usb_conn_state_changed);
 
 #if IS_ENABLED(CONFIG_ZMK_RGB_UNDERGLOW_EXT_POWER)
 static const struct device *const ext_power = DEVICE_DT_GET(DT_INST(0, zmk_ext_power_generic));
@@ -148,7 +162,8 @@ static int rgb_indicator_init(void) {
         layer : false,
         caps_word : false,
         split_missing : true,
-        usb_ready : false
+        usb_ready : false,
+        ble_connected : false
     };
 
     return 0;
