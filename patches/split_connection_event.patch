@@ -14,8 +14,8 @@ index 54ac8131..8b81295f 100644
      slot->update_hid_indicators = 0;
  #endif // IS_ENABLED(CONFIG_ZMK_SPLIT_PERIPHERAL_HID_INDICATORS)
  
-+    ZMK_EVENT_RAISE(new_zmk_split_peripheral_status_changed(
-+        (struct zmk_split_peripheral_status_changed){.connected = false}));
++    raise_zmk_split_peripheral_status_changed(
++        (struct zmk_split_peripheral_status_changed){.connected = false});
 +
      return 0;
  }
@@ -25,8 +25,8 @@ index 54ac8131..8b81295f 100644
  
      peripherals[idx].state = PERIPHERAL_SLOT_STATE_CONNECTED;
 +
-+    ZMK_EVENT_RAISE(new_zmk_split_peripheral_status_changed(
-+        (struct zmk_split_peripheral_status_changed){.connected = true}));
++    raise_zmk_split_peripheral_status_changed(
++        (struct zmk_split_peripheral_status_changed){.connected = true});
      return 0;
  }
  
