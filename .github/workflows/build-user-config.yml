@@ -112,6 +112,10 @@ jobs:
         working-directory: ${{ env.base_dir }}
         run: west init -l "${{ env.base_dir }}/${{ inputs.config_path }}"
 
+      - name: Cleanup ZMK workspace
+        working-directory: ${{ env.base_dir }}/zmk
+        run: git reset --hard && git clean -fd
+
       - name: West Update
         working-directory: ${{ env.base_dir }}
         run: west update
