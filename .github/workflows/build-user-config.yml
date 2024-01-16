@@ -118,7 +118,7 @@ jobs:
 
       - name: Apply ZMK patches
         working-directory: ${{ env.base_dir }}/zmk
-        run: git reset --hard && git clean -fd && git apply --ignore-whitespace ${{ env.base_dir }}/patches/*.patch
+        run: git apply --ignore-whitespace ${{ env.base_dir }}/patches/*.patch
 
       - name: West Zephyr export
         working-directory: ${{ env.base_dir }}
@@ -169,3 +169,7 @@ jobs:
         with:
           name: ${{ inputs.archive_name }}
           path: ${{ env.build_dir }}/artifacts
+
+      - name: Cleanup ZMK workspace
+        working-directory: ${{ env.base_dir }}/zmk
+        run: git reset --hard && git clean -fd
