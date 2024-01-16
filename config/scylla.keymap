@@ -10,7 +10,7 @@
 // misc aliases
 #define MY_FUN_NUM    mo_sk FUN_NUM LSHFT
 #define MY_NAV_ACNT   mo_sl NAV_ACNT NAV_ACNT
-#define MY_SYM_RET    lt SYMBOL RET
+#define MY_SYM_RET    lt_hp SYMBOL RET
 #define MY_COMMA      lt SCROLL COMMA
 #define MY_DOT        lt MOUSE DOT
 
@@ -28,6 +28,16 @@ ZMK_BEHAVIOR(mo_sl, hold_tap,
     tapping-term-ms = <200>;
     bindings = <&mo>, <&sl>;
 )
+ZMK_BEHAVIOR(lt_hp, hold_tap,
+    flavor = "hold-preferred";
+    tapping-term-ms = <200>;
+    bindings = <&mo>, <&kp>;
+)
+ZMK_BEHAVIOR(mlt, hold_tap,
+    flavor = "tap-preferred";
+    tapping-term-ms = <200>;
+    bindings = <&mo>, <&mkp>;
+)
 
 ZMK_COMBO(combo_capsword, &caps_word,        LF2 RF2, 0 1,  50)
 ZMK_COMBO(combo_caps,     &kp CAPSLOCK,      LB5 RB5, 0 1,  50)
@@ -37,6 +47,12 @@ ZMK_COMBO(combo_mb3_l,    &mkp MB3,      LF1 LF2 LF3, 0 1, 150, 150)
 ZMK_COMBO(combo_mb1_r,    &mkp MB1,          RF1 RF2, 0 1, 150, 150)
 ZMK_COMBO(combo_mb2_r,    &mkp MB2,          RF2 RF3, 0 1, 150, 150)
 ZMK_COMBO(combo_mb3_r,    &mkp MB3,      RF1 RF2 RF3, 0 1, 150, 150)
+
+ZMK_SHIFT_MACRO(bt_sel_0, &bt BT_SEL 0, &bt BT_SEL 0 &bt BT_CLR)
+ZMK_SHIFT_MACRO(bt_sel_1, &bt BT_SEL 1, &bt BT_SEL 1 &bt BT_CLR)
+ZMK_SHIFT_MACRO(bt_sel_2, &bt BT_SEL 2, &bt BT_SEL 2 &bt BT_CLR)
+ZMK_SHIFT_MACRO(bt_sel_3, &bt BT_SEL 3, &bt BT_SEL 3 &bt BT_CLR)
+ZMK_SHIFT_MACRO(bt_sel_4, &bt BT_SEL 4, &bt BT_SEL 4 &bt BT_CLR)
 
 /* Keymap */
 
@@ -140,7 +156,7 @@ ZMK_LAYER(mouse,
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
            &trans       &trans       &trans       &trans       &trans       &trans           &trans       &trans       &trans       &trans       &trans       &trans
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-          &molock    &kp LC(Z)    &kp LC(X)    &kp LC(C)    &kp LC(V)    &kp LC(Y)           &trans       &trans       &trans       &trans       &trans      &molock
+          &molock    &kp LC(Z)    &kp LC(X)    &kp LC(C)    &kp LC(V)    &kp LC(Y)           &trans   &mkp LCLK &mlt SCROLL MCLK &mkp RCLK       &trans      &molock
 // ╰───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
                                                &mkp LCLK    &mkp MCLK    &mkp RCLK           &trans       &trans
                                                                &trans       &trans           &trans
@@ -170,7 +186,7 @@ ZMK_LAYER(system,
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
             &none        &none        &none        &none        &none        &none     &out OUT_USB        &none        &none        &none        &none        &none
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-            &none        &none        &none        &none        &none        &none     &out OUT_BLE &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3        &none   &bt BT_CLR
+            &none        &none        &none        &none        &none        &none     &out OUT_BLE    &bt_sel_0    &bt_sel_1    &bt_sel_2    &bt_sel_3    &bt_sel_4
 // ╰───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
                                                    &none        &none        &none            &none        &none
                                                                 &none        &none            &none

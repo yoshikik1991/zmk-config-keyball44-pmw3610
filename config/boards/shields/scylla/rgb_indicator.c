@@ -120,13 +120,11 @@ static int rgb_indicator_listener(const zmk_event_t *eh) {
     } else if (as_zmk_ble_active_profile_changed(eh) || as_zmk_endpoint_changed(eh)) {
         state.ble_connected = zmk_endpoints_selected().transport == ZMK_TRANSPORT_BLE &&
                                 zmk_ble_active_profile_is_connected();
+        pixels[BLE_0_LED] = OFF; pixels[BLE_1_LED] = OFF; pixels[BLE_2_LED] = OFF;
+        pixels[BLE_3_LED] = OFF; pixels[BLE_4_LED] = OFF;
         if (state.ble_connected) {
             int index = zmk_ble_active_profile_index();
             pixels[BLE_LED(index)] = BLUE;
-        } else {
-            pixels[BLE_1_LED] = OFF;
-            pixels[BLE_2_LED] = OFF;
-            pixels[BLE_3_LED] = OFF;
         }
     }
 
