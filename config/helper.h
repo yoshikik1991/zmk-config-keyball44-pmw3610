@@ -26,7 +26,6 @@
                 key-positions = <keypos>; \
                 layers = <combo_layers>; \
                 require-prior-idle-ms = <prior_idle>; \
-                slow-release; \
                 COMBO_HOOK \
             }; \
         }; \

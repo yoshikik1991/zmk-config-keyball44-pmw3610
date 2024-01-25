@@ -170,6 +170,6 @@ jobs:
           name: ${{ inputs.archive_name }}
           path: ${{ env.build_dir }}/artifacts
 
-      - name: Cleanup ZMK workspace
+      - name: Cleanup ZMK patches
         working-directory: ${{ env.base_dir }}/zmk
         run: git reset --hard && git clean -fd

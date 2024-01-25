@@ -13,6 +13,10 @@
 #define MY_SYM_RET    lt_hp SYMBOL RET
 #define MY_COMMA      lt SCROLL COMMA
 #define MY_DOT        lt MOUSE DOT
+#define MY_CTRL       kp_sk LCTRL LCTRL
+#define MY_ALT        kp_sk LALT LALT
+#define MY_GUI        kp_sk LGUI LGUI
+
 
 &sk {
     quick-release;
@@ -22,6 +26,11 @@ ZMK_BEHAVIOR(mo_sk, hold_tap,
     flavor = "hold-preferred";
     tapping-term-ms = <200>;
     bindings = <&mo>, <&sk>;
+)
+ZMK_BEHAVIOR(kp_sk, hold_tap,
+    flavor = "hold-preferred";
+    tapping-term-ms = <200>;
+    bindings = <&kp>, <&sk>;
 )
 ZMK_BEHAVIOR(mo_sl, hold_tap,
     flavor = "hold-preferred";
@@ -41,12 +50,11 @@ ZMK_BEHAVIOR(mlt, hold_tap,
 
 ZMK_COMBO(combo_capsword, &caps_word,        LF2 RF2, 0 1,  50)
 ZMK_COMBO(combo_caps,     &kp CAPSLOCK,      LB5 RB5, 0 1,  50)
-ZMK_COMBO(combo_mb1_l,    &mkp MB1,          LF1 LF2, 0 1, 150, 150)
-ZMK_COMBO(combo_mb2_l,    &mkp MB2,          LF2 LF3, 0 1, 150, 150)
-ZMK_COMBO(combo_mb3_l,    &mkp MB3,      LF1 LF2 LF3, 0 1, 150, 150)
-ZMK_COMBO(combo_mb1_r,    &mkp MB1,          RF1 RF2, 0 1, 150, 150)
-ZMK_COMBO(combo_mb2_r,    &mkp MB2,          RF2 RF3, 0 1, 150, 150)
-ZMK_COMBO(combo_mb3_r,    &mkp MB3,      RF1 RF2 RF3, 0 1, 150, 150)
+ZMK_COMBO(combo_bootload, &bootloader,       RF2 RT2, 0 1, 150, 150)
+ZMK_COMBO(combo_reset,    &sys_reset,        RF3 RT3, 0 1, 150, 150)
+ZMK_COMBO(combo_mb1,      &mkp MB1,          RF1 RF2, 0 1, 150, 150)
+ZMK_COMBO(combo_mb2,      &mkp MB2,          RF2 RF3, 0 1, 150, 150)
+ZMK_COMBO(combo_mb3,      &mkp MB3,      RF1 RF2 RF3, 0 1, 150, 150)
 
 ZMK_SHIFT_MACRO(bt_sel_0, &bt BT_SEL 0, &bt BT_SEL 0 &bt BT_CLR)
 ZMK_SHIFT_MACRO(bt_sel_1, &bt BT_SEL 1, &bt BT_SEL 1 &bt BT_CLR)
@@ -62,14 +70,14 @@ ZMK_LAYER(canary,
 // ╭───────────────────────────────────────────────────────────────────────────────╮ ╭───────────────────────────────────────────────────────────────────────────────╮
           &kp ESC       &kp N1       &kp N2       &kp N3       &kp N4       &kp N5           &kp N6       &kp N7       &kp N8       &kp N9       &kp N0    &kp MINUS
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-          &kp TAB        &kp W        &kp L        &kp Y        &kp P        &kp B            &kp F        &kp J        &kp O        &kp U        &kp Q     &kp BSLH
+          &kp TAB        &kp W        &kp L        &kp Y        &kp P        &kp B            &kp F        &kp J        &kp O        &kp U        &kp Q     &kp SEMI
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-        &sk LSHFT        &kp C        &kp R        &kp S        &kp T        &kp G            &kp M        &kp N        &kp E        &kp I        &kp A     &kp SEMI
+        &kp LSHFT        &kp C        &kp R        &kp S        &kp T        &kp G            &kp M        &kp N        &kp E        &kp I        &kp A     &kp APOS
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-        &kp LCTRL     &kp APOS  &lt MOUSE Z &lt SCROLL V        &kp D        &kp K            &kp X        &kp H    &MY_COMMA      &MY_DOT     &kp FSLH    &kp EQUAL
+        &kp LCTRL     &kp LGUI  &lt MOUSE Z &lt SCROLL V        &kp D        &kp K            &kp X        &kp H    &MY_COMMA      &MY_DOT     &kp FSLH    &kp EQUAL
 // ╰───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-                                               &kp LCTRL    &kp SPACE  &MY_FUN_NUM     &MY_NAV_ACNT  &MY_SYM_RET
-                                                             &kp LALT     &kp LGUI         &kp BSPC
+                                                &MY_CTRL    &kp SPACE  &MY_FUN_NUM     &MY_NAV_ACNT  &MY_SYM_RET
+                                                              &MY_ALT      &MY_GUI         &kp BSPC
 //                                        ╰────────────────────────────────────────╯ ╰───────────────────────────╯
 )
 
@@ -135,9 +143,9 @@ ZMK_LAYER(symbol,
 
 ZMK_LAYER(nav_acnt,
 // ╭───────────────────────────────────────────────────────────────────────────────╮ ╭───────────────────────────────────────────────────────────────────────────────╮
-            &none        &none        &none        &none        &none        &none            &none        &none        &none        &none        &none  &bootloader
+            &none        &none        &none        &none        &none        &none            &none        &none        &none        &none        &none        &none
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-            &none      &kp INS     &kp HOME       &kp UP      &kp END    &kp PG_UP            &none   &kp RA(N5)    &kp RA(O)    &kp RA(U)    &kp RA(Y)   &sys_reset
+            &none      &kp INS     &kp HOME       &kp UP      &kp END    &kp PG_UP            &none   &kp RA(N5)    &kp RA(O)    &kp RA(U)    &kp RA(Y)        &none
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
             &none        &none     &kp LEFT     &kp DOWN    &kp RIGHT    &kp PG_DN            &none    &kp RA(N)    &kp RA(E)    &kp RA(I)    &kp RA(A)        &none
 // ├───────────────────────────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
