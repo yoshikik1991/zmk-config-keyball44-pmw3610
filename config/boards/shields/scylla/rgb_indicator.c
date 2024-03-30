@@ -68,7 +68,7 @@ static int rgb_indicator_listener(const zmk_event_t *eh) {
         uint8_t layer = zmk_keymap_highest_layer_active();
         switch (layer)
         {
-        case CANARY: case QWERTY: case GAME:
+        case CANARY: case QWERTY:
             state.layer = false;
             pixels[20] = OFF;
             break;
@@ -76,6 +76,8 @@ static int rgb_indicator_listener(const zmk_event_t *eh) {
             state.layer = true;
             struct led_rgb color;
             switch (layer) {
+            case GAME: case GAMERTY:
+                color = WHITE; break;
             case FUN_NUM:
                 color = RED; break;
             case SYMBOL:
