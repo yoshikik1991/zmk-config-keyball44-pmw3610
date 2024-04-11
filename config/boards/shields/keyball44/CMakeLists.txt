@@ -1,0 +1,2 @@
+zephyr_library_sources_ifdef(CONFIG_RGB_INDICATOR rgb_indicator.c)
+zephyr_include_directories(${ZMK_CONFIG})

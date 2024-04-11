@@ -1,0 +1,12 @@
+file_format: "1"
+id: keyball44
+name: Keyball44
+type: shield
+url: https://github.com/Bastardkb/Charybdis/
+requires: [pro_micro]
+features:
+  - keys
+  - pointer
+siblings:
+  - keyball44_left
+  - keyball44_right
