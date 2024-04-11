@@ -8,9 +8,9 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
-#include <dt-bindings/zmk/mouse.h>
 
 #define DEF 0
 #define LWR 1
@@ -53,12 +53,12 @@
 
         lower_layer {
             bindings = <
-&kp ESC    &kp Q     &kp N7        &kp N8  &kp N9        &kp T  &kp Y     &kp U      &kp I      &kp O       &kp P      &kp MINUS
-&kp TAB    &kp A     &kp N4        &kp N5  &kp N6        &kp G  &kp H     &kp J      &kp K      &kp L       &kp SEMI   &kp SQT
-&kp LSHFT  &kp Z     &kp N1        &kp N2  &kp N3        &kp B  &kp N     &kp M      &kp COMMA  &kp PERIOD  &kp SLASH  &kp BSLH
-           &kp LALT  &kp LCTRL     &none   &kp NUMBER_0  &none  &kp BSPC  &kp ENTER                         &kp LWIN
+&kp ESC    &kp Q     &kp N7     &kp N8  &kp N9        &kp T  &kp Y     &kp U      &kp I      &kp O       &kp P      &kp MINUS
+&kp TAB    &kp A     &kp N4     &kp N5  &kp N6        &kp G  &kp H     &kp J      &kp K      &kp L       &kp SEMI   &kp SQT
+&kp LSHFT  &kp Z     &kp N1     &kp N2  &kp N3        &kp B  &kp N     &kp M      &kp COMMA  &kp PERIOD  &kp SLASH  &kp BSLH
+           &kp LALT  &kp LCTRL  &none   &kp NUMBER_0  &none  &kp BSPC  &kp ENTER                         &kp LWIN
             >;
-        }; 
+        };
 
         raise_layer {
             bindings = <
@@ -71,10 +71,10 @@
 
         adjust_layer {
             bindings = <
-&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3       &bt BT_SEL 4     &none            &none            &none  &none  &none        &none
-&none   &none         &none         &none         &none              &none            &none            &none            &none  &none  &none        &none
-&none   &none         &none         &none         &none              &out OUT_TOG     &none            &none            &none  &none  &none        &none
-        &sys_reset    &bt BT_CLR    &none         &ext_power EP_TOG  &rgb_ug RGB_TOG  &rgb_ug RGB_EFR  &rgb_ug RGB_EFF                &bootloader
+&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3       &bt BT_SEL 4     &none            &none            &none  &none     &none        &none
+&none   &none         &none         &none         &none              &none            &mkp MB4         &mkp MB1         &none  &mkp MB2  &none        &none
+&none   &none         &none         &none         &none              &out OUT_TOG     &mkp MB5         &none            &none  &none     &none        &none
+        &sys_reset    &bt BT_CLR    &none         &ext_power EP_TOG  &rgb_ug RGB_TOG  &rgb_ug RGB_EFR  &rgb_ug RGB_EFF                   &bootloader
             >;
         };
     };
