@@ -2,4 +2,4 @@ on: [push, workflow_dispatch]
 
 jobs:
   build:
-    uses: inorichi/zmk-config-charybdis/.github/workflows/build-user-config.yml@main
+    uses: yoshikik1991/zmk-config-keyball44-pmw3610/.github/workflows/build-user-config.yml@main
