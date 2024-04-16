@@ -6,7 +6,6 @@
 
 #include "keyball44.dtsi"
 #include <dt-bindings/led/led.h>
-#include "layers.h"
 
 &default_transform {
     col-offset = <6>;
